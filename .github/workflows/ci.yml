@@ -1,0 +1,25 @@
+name: CI
+on:
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+  # opened, synchronize, reopened by default
+  pull_request:
+  push: 
+    branches: 
+      - master # only on push to master branch
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/marketplace/actions/checkout
+      - uses: actions/checkout@v4 # download the repository
+      # https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version # read from file
+          bundler-cache: true # automatically run bundle install and cache the result
+
+      - name: Run Tests
+        env:
+          RAILS_ENV: test
+        run: bundle exec rspec ./specs
