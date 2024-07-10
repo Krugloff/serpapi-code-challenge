@@ -366,3 +366,4 @@ TODO
 + we need to check more masonry examples
 + there is a good chance to play with the RBS files
 + constants overloading for carousel cards can be refactored
++ parallel parsing of differnet parts/styles instead sequential one. For example one process can try to find carousel and other can try to find masonry.
