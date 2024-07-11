@@ -8,13 +8,12 @@ module StringScannerBased
 
       # unfortunately in this variant attributes should be exactly in the same order
       LINK_OPEN_PATTERN = %r/
-        aria-label="(?<name>.+?)".*?
-        href="(?<link>.+?)".*?
-        title="(?<title>.+?)".*?
-        >
+        aria-label="(?<name>.+?)"[^>]*?
+        href="(?<link>.+?)"[^>]*?
+        title="(?<title>.+?)"
       /x
 
-      THUMBNAIL_ID_PATTERN = /<img[^>]*?id="(?<id>.+?)".*?>/
+      THUMBNAIL_ID_PATTERN = /<img[^>]*?id="(?<id>.+?)"/
       # approach based on 'title - label' is more general
       # META_PATTERN = /<div class=".*?klmeta.*?">(?<meta>.+?)<\/div>/
 

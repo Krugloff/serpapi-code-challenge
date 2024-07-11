@@ -5,11 +5,11 @@ module StringScannerBased
     # based on dune-actors.html
     class CarouselCard3 < CarouselCard1
       LINK_OPEN_PATTERN = %r/
-        title="(?<name>.+?)".*?
-        href="(?<link>.+?)".*?>
+        title="(?<name>.+?)"[^>]*?
+        href="(?<link>.+?)"
       /x
 
-      META_PATTERN = /<div class=".*?ellip.*?">(?<meta>.+?)<\/div>/
+      META_PATTERN = /<div class=".*?ellip.*?">(?<meta>[^<]+)/
 
       private
         # order is important!

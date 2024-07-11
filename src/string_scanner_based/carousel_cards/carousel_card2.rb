@@ -5,10 +5,9 @@ module StringScannerBased
     class CarouselCard2 < CarouselCard1
       # unfortunately the order of attrs is very important
       LINK_OPEN_PATTERN = %r/
-        href="(?<link>.+?)".*?
-        title="(?<title>.+?)".*?
-        aria-label="(?<name>.+?)".*?
-        >
+        href="(?<link>.+?)"[^>]*?
+        title="(?<title>.+?)"[^>]*?
+        aria-label="(?<name>.+?)"
       /x
 
       # based on us-presidents.html it's last .FozYP div 
