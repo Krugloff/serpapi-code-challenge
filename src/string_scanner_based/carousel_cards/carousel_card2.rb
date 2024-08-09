@@ -10,7 +10,7 @@ module StringScannerBased
         aria-label="(?<name>.+?)"
       /x
 
-      # based on us-presidents.html it's last .FozYP div 
+      # based on us-presidents.html it's last .FozYP div
       # unfortunately colorado-cities.html cards contains name inside .FozYP element
       # so we can't simple use this class or last div
       # there is a two ways I see:
@@ -21,7 +21,7 @@ module StringScannerBased
       private
 
         # regexp since it's a bit difficult to scan
-        # def meta = scanner.rest.scan(META_PATTERN).last&.last 
+        # def meta; scanner.rest.scan(META_PATTERN).last&.last ; end
     end
   end
 end

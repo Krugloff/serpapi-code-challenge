@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.2.4"
+ruby "2.7.8"
 
 # for parsing html documents to nodes tree
 # see nokogiri_based_knowledge_graph.rb

@@ -6,7 +6,7 @@ module RegexpBased
     # (function(){var s='(?<image>)';var ii=['(?<id>)'];
     ELEMENT_PATTERN = /\(function\(\){var s='(?<image>[^']+?)';var ii=\['(?<id>[^']+?)'\];/m
 
-    private attr_reader :html
+    attr_reader :html
 
     def initialize(html)
       @html = html
@@ -20,7 +20,7 @@ module RegexpBased
       html
         .scan(ELEMENT_PATTERN)
         .tap { raise(ElementNotFound.new(self.class.name)) if _1.empty? }
-        .each_with_object({}) { |(blob, id), rslt| rslt[id] = blob.gsub('\\', '') } 
+        .each_with_object({}) { |(blob, id), rslt| rslt[id] = blob.gsub('\\', '') }
     end
   end
 
