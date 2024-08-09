@@ -36,7 +36,12 @@ GEM
     stringio (3.1.1)
 
 PLATFORMS
-  arm64-darwin-22
+  aarch64-linux
+  arm-linux
+  arm64-darwin
+  x86-linux
+  x86_64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   debug
