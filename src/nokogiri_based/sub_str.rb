@@ -7,8 +7,8 @@ module StringScannerBased
   # you need send .to_s
   # otherwise send nothing
   # I need this class since I need stop scanner in case no open_pattern was found
-  SubStr = Data.define(:scanner, :open_pattern, :close_pattern) do
-    def to_s = value
+  SubStr = Struct.new(:scanner, :open_pattern, :close_pattern) do
+    def to_s; value; end
 
     private
 

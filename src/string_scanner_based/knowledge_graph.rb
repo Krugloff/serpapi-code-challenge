@@ -9,26 +9,26 @@ require_relative './element_not_found.rb'
 # ThumbnailMap lazy start scanning from pointer moved by Carousel
 module StringScannerBased
   class KnowledgeGraph
-    private attr_reader :html
+    attr_reader :html
 
     def initialize(html)
       @html = html
     end
 
-    def to_h = { artworks: required_artworks }
+    def to_h; { artworks: required_artworks }; end
 
     private
-   
-      def required_artworks = artworks.find(&:any?) || raise(ElementNotFound.new('Artworks'))
 
-      def artworks 
-        [Carousel, Masonry].lazy.map do 
+      def required_artworks; artworks.find(&:any?) || raise(ElementNotFound.new('Artworks')); end
+
+      def artworks
+        [Carousel, Masonry].lazy.map do
           _1.new(scanner).to_a
         rescue ElementNotFound
           []
         end
       end
 
-      def scanner = StringScanner.new(html)
+      def scanner; StringScanner.new(html); end
   end
 end

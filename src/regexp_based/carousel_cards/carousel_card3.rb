@@ -9,8 +9,8 @@ module RegexpBased
 
     private
 
-      def name = html.slice(NAME_PATTERN, 1).to_s
-      def meta = html.slice(META_PATTERN, 1).to_s
+      def name; html.slice(NAME_PATTERN, 1).to_s; end
+      def meta; html.slice(META_PATTERN, 1).to_s; end
     end
   end
 end

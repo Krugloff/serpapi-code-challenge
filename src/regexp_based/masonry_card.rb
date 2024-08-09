@@ -10,34 +10,34 @@ module RegexpBased
 
     HREF_PATTERN = /<a[^>]*?href="(?<href>.+?)"/
     THUMBNAIL_ID_PATTERN = /<img[^>]*?id="(?<id>[^"]+?)"/
-    
+
     # contains of last div
     META_PATTERN = />(?<meta>[^<]*?)(<\/div>)*?<\/a>/
 
     # there is no id sometimes, only src.
     IMG_PATTERN = /<img[^>]*?alt="(?<alt>.+?)"([^>]*?id="(?<id>[^"]+?)")?/
 
-    private attr_reader :html, :thumbnails_map
+    attr_reader :html, :thumbnails_map
 
     def initialize(html, thumbnails_map)
       @html = html
       @thumbnails_map = thumbnails_map
     end
 
-    def to_h = value
-    
+    def to_h; value; end
+
     private
 
-      def value = { name:, link:, image: }.merge(extensions)
+      def value; { name: name, link: link, image: image}.merge(extensions); end
       # URI.join("https://www.google.com", _1).to_s maybe better
-      def link = CGI.unescapeHTML(DOMAIN + html.slice(HREF_PATTERN, 1))
-      def image = thumbnails_map[thumbnail_id]
+      def link; CGI.unescapeHTML(DOMAIN + html.slice(HREF_PATTERN, 1)); end
+      def image; thumbnails_map[thumbnail_id]; end
       # last div can contains nothing
-      def meta = html.slice(META_PATTERN, 1).to_s
-      def extensions = meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h
-      def img = @img ||= html.match(IMG_PATTERN)
-      def name = img[:alt]
-      def thumbnail_id = img[:id]
+      def meta; html.slice(META_PATTERN, 1).to_s; end
+      def extensions; meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h; end
+      def img; @img ||= html.match(IMG_PATTERN); end
+      def name; img[:alt]; end
+      def thumbnail_id; img[:id]; end
   end
 
   private_constant :MasonryCard

@@ -8,13 +8,13 @@ module StringScannerBased
     ID_OPEN_PATTERN = /;var ii=\['/
     ELEMENT_CLOSE_PATTERN = /'/
 
-    private attr_reader :scanner
+    attr_reader :scanner
 
     def initialize(scanner)
       @scanner = scanner
     end
 
-    def to_h = enum.to_h.tap { raise ElementNotFound.new('ThumbnailsMap') if _1.empty? }
+    def to_h; enum.to_h.tap { raise ElementNotFound.new('ThumbnailsMap') if _1.empty? }; end
 
     private
 
@@ -25,10 +25,10 @@ module StringScannerBased
             # surprisly current version is faster
             blob = SubStr[t_scanner, IMAGE_OPEN_PATTERN, ELEMENT_CLOSE_PATTERN]
               .delete_suffix(?')
-  
+
             id = SubStr[t_scanner, ID_OPEN_PATTERN, ELEMENT_CLOSE_PATTERN]
               .delete_suffix(?')
-  
+
             # TODO:
             # for some reasons expected-array
             # contains 2Qx3dx3d instead 2Q\x3d\x3d

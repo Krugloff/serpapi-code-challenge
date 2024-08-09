@@ -16,15 +16,15 @@ files = [
 
 DUMMY_HTML = <<~HTM.gsub("\n\n", '').gsub("\n", ' ').squeeze(' ').gsub('> <', '><')
   <g-scrolling-carousel>
-    <a 
+    <a
       class="klitem"
-      aria-label="The Starry Night" 
-      href="/search?something" 
+      aria-label="The Starry Night"
+      href="/search?something"
       title="The Starry Night (1889)">
       <g-img><img id="kximg0"></g-img>
     </a>
 
-    <a 
+    <a
       class="klitem"
       aria-label="Sunflowers"
       href="/search?something"
@@ -44,7 +44,7 @@ HTM
       context "when file is #{name}" do
         let(:graph) { described_class.new(html).to_h }
 
-        let(:expected_result) do 
+        let(:expected_result) do
           Dummy::KnowledgeGraph.new("./files/#{name}-expected-array.json").to_h
         end
 
@@ -54,15 +54,15 @@ HTM
           # TODO: actually I guess that's better to return empty extensions instead "no key"
           it 'returns expected format' do
             artworks = graph[:artworks]
-            
+
             expect(artworks).to_not be_empty
 
-            # ruby pattern matching version
-            expect(artworks.all? do
-              _1 in
-                { name: String, link: String, image: String | nil, extensions: [String] } |
-                { name: String, link: String, image: String | nil } 
-            end).to be_truthy
+            # # ruby pattern matching version
+            # expect(artworks.all? do
+            #   _1 in
+            #     { name: String, link: String, image: String | nil, extensions: [String] } |
+            #     { name: String, link: String, image: String | nil }
+            # end).to be_truthy
 
             # rspec matchers version
             artworks.each do |artwork|
@@ -104,7 +104,7 @@ HTM
           ]
         end
 
-      
+
         it { expect(graph[:artworks]).to eq(dummy_result) }
       end
 
@@ -112,23 +112,23 @@ HTM
         let(:dummy_html) { DUMMY_HTML.gsub('g-scrolling-carousel', 'g-scroling-carousel') }
 
         it { expect{graph[:artworks]}.to raise_error(namespace::ElementNotFound) }
-      end   
-      
+      end
+
       context 'w/o thumbnails block' do
         let(:dummy_html) { DUMMY_HTML.gsub(/<script[^>]*?>[^<]*?<\/script>/, '') }
 
         it { expect{graph[:artworks]}.to raise_error(namespace::ElementNotFound) }
-      end 
+      end
 
       # # TODO:
       # xcontext 'w/o correct thumbnails blobs' do
       #   it { expect{graph[:artworks]}.to eq([]) } #raise_error(namespace::ElementNotFound) }
-      # end 
+      # end
 
       # # TODO:
       # xcontext 'w/o correct thumbnails ids' do
       #   it { expect{graph[:artworks]}.to eq([]) } #raise_error(namespace::ElementNotFound) }
-      # end 
+      # end
 
       # # TODO:
       # xcontext 'w/o correct links classes' do
@@ -138,22 +138,22 @@ HTM
       # # TODO:
       # xcontext 'w/o correct link labels' do
       #   it { expect{graph[:artworks]}.to eq([]) } #raise_error(namespace::ElementNotFound) }
-      # end 
+      # end
 
       # # TODO:
       # xcontext 'w/o correct link hrefs' do
       #   it { expect{graph[:artworks]}.to eq([]) } #raise_error(namespace::ElementNotFound) }
-      # end 
+      # end
 
       # # TODO:
       # xcontext 'w/o correct link attrs order' do
       #   it { expect{graph[:artworks]}.to eq([]) } #raise_error(namespace::ElementNotFound) }
-      # end 
+      # end
 
       # # TODO:
       # xcontext 'w/o correct images' do
       #   it { expect{graph[:artworks]}.to eq([]) } #raise_error(namespace::ElementNotFound) }
       # end
-    end 
+    end
   end
 end

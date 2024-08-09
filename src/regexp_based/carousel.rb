@@ -17,17 +17,17 @@ module RegexpBased
       /<div[^>]*?role="listitem".*?><a.*?>.*?<\/a>/ => CarouselCards::CarouselCard3
     }
 
-    private attr_reader :html
+    attr_reader :html
 
     def initialize(html)
       @html = html
     end
 
-    def to_a = variant || raise(ElementNotFound.new('Valid Card Variant'))
+    def to_a; variant || raise(ElementNotFound.new('Valid Card Variant')); end
 
     private
 
-      def thumbnails_map 
+      def thumbnails_map
         @thumbnails_map ||= ThumbnailsMap.new(html).to_h
       end
 
