@@ -34,9 +34,9 @@ jobs:
       #   run: bundle exec ruby ./benchmarks/jit.rb
 
       - name: Run Jit Benchmark
-        if: ${{ matrix.ruby-verison == '2.7' }}
+        if: ${{ matrix.ruby-verison == 2.7 }}
         run: bundle exec ruby -e 'puts 1'
 
       - name: Run Yjit Benchmark
-        if: ${{ matrix.ruby-verison != '2.7' }}
+        if: ${{ matrix.ruby-verison != 2.7 }}
         run: bundle exec ruby -e 'puts 2'
