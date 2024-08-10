@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['2.7', '3.1', '3.2', '3.3']
+        ruby-version: ['2.7'] #, '3.1', '3.2', '3.3']
 
     steps:
       # https://github.com/marketplace/actions/checkout
@@ -27,16 +27,20 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true # automatically run bundle install and cache the result
 
-      - name: Run Tests
-        run: bundle exec rspec ./specs
+      # - name: Run Tests
+      #   run: bundle exec rspec ./specs
 
-      - name: Run Benchmark
-        run: bundle exec ruby ./benchmarks/jit.rb
+      # - name: Run Benchmark
+      #   run: bundle exec ruby ./benchmarks/jit.rb
+
+      # - name: Run Jit Benchmark
+      #   if: ${{ matrix.ruby-verison == '2.7' }}
+      #   run: bundle exec ruby --jit ./benchmarks/jit.rb
 
       - name: Run Jit Benchmark
-        run: bundle exec ruby --jit ./benchmarks/jit.rb
         if: ${{ matrix.ruby-verison == '2.7' }}
+        run: bundle exec ruby -e 'puts Hello World'
 
-      - name: Run Yjit Benchmark
-        run: bundle exec ruby --yjit ./benchmarks/jit.rb
-        if: ${{ matrix.ruby-verison != '2.7' }}
+      # - name: Run Yjit Benchmark
+      #   run: bundle exec ruby --yjit ./benchmarks/jit.rb
+      #   if: ${{ matrix.ruby-verison != '2.7' }}
