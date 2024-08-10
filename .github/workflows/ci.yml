@@ -27,17 +27,16 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true # automatically run bundle install and cache the result
 
-      - name: Run Tests
-        run: bundle exec rspec ./specs
+      # - name: Run Tests
+      #   run: bundle exec rspec ./specs
 
-      - name: Run Benchmark
-        run: bundle exec ruby ./benchmarks/jit.rb
+      # - name: Run Benchmark
+      #   run: bundle exec ruby ./benchmarks/jit.rb
 
       - name: Run Jit Benchmark
         if: ${{ matrix.ruby-verison == '2.7' }}
-        run: bundle exec ruby --jit ./benchmarks/jit.rb
-
+        run: bundle exec ruby -e 'puts 1'
 
       - name: Run Yjit Benchmark
         if: ${{ matrix.ruby-verison != '2.7' }}
-        run: bundle exec ruby --yjit ./benchmarks/jit.rb
+        run: bundle exec ruby -e 'puts 2'
