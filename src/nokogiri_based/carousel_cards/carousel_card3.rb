@@ -8,9 +8,9 @@ module NokogiriBased
       META_PATTERN = "div.ellip"
 
       private
-        
-        def name = tree[NAME_PATTERN]
-        def meta = tree.at_css(META_PATTERN)&.text.to_s
+
+        def name; tree[NAME_PATTERN]; end
+        def meta; tree.at_css(META_PATTERN)&.text.to_s; end
     end
   end
 end

@@ -13,10 +13,10 @@ module StringScannerBased
 
       private
         # order is important!
-        def value = { name:, link:, image: }.merge(extensions)
+        def value; { name: name, link: link, image: image}.merge(extensions); end
         # it is important to scan meta after all!
-        def extensions = meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h
-        def meta = scanner.skip_until(META_PATTERN).then { scanner[:meta] }
+        def extensions; meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h; end
+        def meta; scanner.skip_until(META_PATTERN).then { scanner[:meta] }; end
     end
   end
 end

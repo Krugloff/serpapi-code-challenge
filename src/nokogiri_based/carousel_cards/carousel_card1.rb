@@ -15,7 +15,7 @@ module NokogiriBased
       # approach based on 'title - label' is more general
       # META_PATTERN = "div.klmeta"
 
-      private attr_reader :tree, :thumbnails_map
+      attr_reader :tree, :thumbnails_map
 
       def initialize(tree, thumbnails_map)
         @tree = tree
@@ -23,19 +23,19 @@ module NokogiriBased
       end
 
       # TODO: return empty result if name or link was not found
-      def to_h = value
+      def to_h; value; end
 
-      private 
+      private
 
-        def value = { name:, link:, image: }.merge(extensions)
-        def name = tree[NAME_PATTERN]
-        def link = CGI.unescapeHTML(DOMAIN + tree[HREF_PATTERN])
-        def title = tree[TITLE_PATTERN]
+        def value; { name: name, link: link, image: image }.merge(extensions); end
+        def name; tree[NAME_PATTERN]; end
+        def link; CGI.unescapeHTML(DOMAIN + tree[HREF_PATTERN]); end
+        def title; tree[TITLE_PATTERN]; end
         # based on us-presidents.html there is no images sometimes
-        def image = thumbnails_map[thumbnail_id]
-        def thumbnail_id = tree.at_css(THUMBNAIL_PATTERN).to_h['id']
-        def meta = title.to_s.sub(name, '').gsub(/[\(\)]/, '')
-        def extensions = meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h
+        def image; thumbnails_map[thumbnail_id]; end
+        def thumbnail_id; tree.at_css(THUMBNAIL_PATTERN).to_h['id']; end
+        def meta; title.to_s.sub(name, '').gsub(/[\(\)]/, ''); end
+        def extensions; meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h; end
     end
   end
 end

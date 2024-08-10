@@ -16,22 +16,22 @@ module NokogiriBased
       "div[role=\"listitem\"] > a": CarouselCards::CarouselCard3
     }
 
-    private attr_reader :tree
+    attr_reader :tree
 
     def initialize(tree)
       @tree = tree
     end
 
-    def to_a = variants.find(&:any?) || raise(ElementNotFound.new('Valid Card Variant'))
+    def to_a; variants.find(&:any?) || raise(ElementNotFound.new('Valid Card Variant')); end
 
     private
-    
+
       def thumbnails_map
         @thumbnails_map ||= ThumbnailsMap.new(tree).to_h
       end
 
       def variants
-        CARD_VARIANTS.lazy.map do |selector, klass| 
+        CARD_VARIANTS.lazy.map do |selector, klass|
           subtree.css(selector).map { klass.new(_1, thumbnails_map).to_h }
         end
       end

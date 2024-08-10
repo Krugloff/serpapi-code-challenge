@@ -17,14 +17,14 @@ module StringScannerBased
 
     CARD_CLOSE_PATTERN = /<\/a>/
 
-    private attr_reader :scanner
+    attr_reader :scanner
 
     def initialize(scanner)
       @scanner = scanner
     end
 
     # so each CarouselCard moves the scanner pointer
-    def to_a = enum.take_while(&:any?)
+    def to_a; enum.take_while(&:any?); end
 
     private
 
@@ -35,7 +35,7 @@ module StringScannerBased
         end
       end
 
-      def body = SubStr[scanner, BLOCK_OPEN_PATTERN, BLOCK_CLOSE_PATTERN].to_s
+      def body; SubStr[scanner, BLOCK_OPEN_PATTERN, BLOCK_CLOSE_PATTERN].to_s; end
 
       def thumbnails_map
         @thumbnails_map ||= ThumbnailsMap.new(scanner).to_h
@@ -48,13 +48,13 @@ module StringScannerBased
           # hack to not miss the first link
           .tap { carousel_scanner.unscan }
       end
-  
+
       # should not be cached since each send will move the scanner pointer
       # there is img without id, links without img and links without meta info sometimes...
       # so I don't want scan until next link
-      def card = variant.last.new(StringScanner.new(card_html), thumbnails_map).to_h
-      def card_html = carousel_scanner.scan_until(CARD_CLOSE_PATTERN)
-  
+      def card; variant.last.new(StringScanner.new(card_html), thumbnails_map).to_h; end
+      def card_html; carousel_scanner.scan_until(CARD_CLOSE_PATTERN); end
+
       def carousel_scanner
         @carousel_scanner ||= StringScanner.new(body)
       end

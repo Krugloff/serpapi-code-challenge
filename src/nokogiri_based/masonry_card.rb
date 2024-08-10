@@ -11,26 +11,26 @@ module NokogiriBased
     NAME_PATTERN = 'alt'
     META_PATTERN = "div"
 
-    private attr_reader :tree, :thumbnails_map
+    attr_reader :tree, :thumbnails_map
 
     def initialize(tree, thumbnails_map)
       @tree = tree
       @thumbnails_map = thumbnails_map
     end
 
-    def to_h = value
+    def to_h; value; end
 
-    private 
+    private
 
-      def value = { name:, link:, image: }.merge(extensions)
-      def link = CGI.unescapeHTML(DOMAIN + tree[HREF_PATTERN])
-      def img = @img ||= tree.at_css(THUMBNAIL_PATTERN)
-      def name = img[NAME_PATTERN]
-      def image = thumbnails_map[img['id']]
+      def value; { name: name, link: link, image: image}.merge(extensions); end
+      def link; CGI.unescapeHTML(DOMAIN + tree[HREF_PATTERN]); end
+      def img; @img ||= tree.at_css(THUMBNAIL_PATTERN); end
+      def name; img[NAME_PATTERN]; end
+      def image; thumbnails_map[img['id']]; end
 
       # last div can contains nothing
-      def meta = tree.css(META_PATTERN).last&.text.to_s
-      def extensions = meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h
+      def meta; tree.css(META_PATTERN).last&.text.to_s; end
+      def extensions; meta.then { { extensions: [_1.strip] } unless _1.empty? }.to_h; end
   end
 
   private_constant :MasonryCard
