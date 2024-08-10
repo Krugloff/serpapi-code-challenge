@@ -3,23 +3,40 @@ on:
   # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
   # opened, synchronize, reopened by default
   pull_request:
-  push: 
-    branches: 
+  push:
+    branches:
       - master # only on push to master branch
 jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: ['2.7', '3.1', '3.2', '3.3']
+
     steps:
       # https://github.com/marketplace/actions/checkout
-      - uses: actions/checkout@v4 # download the repository
+      - name: Download the repository
+        uses: actions/checkout@v4
+
       # https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
-      - uses: ruby/setup-ruby@v1
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version # read from file
+          ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true # automatically run bundle install and cache the result
 
       - name: Run Tests
-        env:
-          RAILS_ENV: test
         run: bundle exec rspec ./specs
+
+      - name: Run Benchmark
+        run: bundle exec ruby ./benchmarks/jit.rb
+
+      - name: Run Jit Benchmark
+        run: bundle exec ruby --jit ./benchmarks/jit.rb
+        if: ${{ matrix.ruby-verison == '2.7' }}
+
+      - name: Run Yjit Benchmark
+        run: bundle exec ruby --yjit ./benchmarks/jit.rb
+        if: ${{ matrix.ruby-verison != '2.7' }}

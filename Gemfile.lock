@@ -63,8 +63,5 @@ DEPENDENCIES
   nokolexbor
   rspec
 
-RUBY VERSION
-   ruby 2.7.8p225
-
 BUNDLED WITH
    2.4.22
